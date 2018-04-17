@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import com.model2.mvc.common.Search;
 import com.model2.mvc.common.util.DBUtil;
+import com.model2.mvc.service.domain.Product;
 import com.model2.mvc.service.domain.Purchase;
 import com.model2.mvc.service.product.dao.ProductDAO;
 import com.model2.mvc.service.user.dao.UserDao;
@@ -131,8 +132,11 @@ public class PurchaseDAO {
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		Connection con = DBUtil.getConnection();
+		System.out.println("바이어아이디 : " + buyerId);
 
-		String sql = "SELECT * FROM TRANSACTION WHERE BUYER_ID= '" + buyerId + "'";
+		String sql = "SELECT pr.prod_no, pr.prod_name,pr.price,tr.TRAN_NO,tr.RECEIVER_NAME,tr.RECEIVER_PHONE,tr.TRAN_STATUS_CODE " 
+				+ " FROM TRANSACTION tr,PRODUCT pr "
+				+ " WHERE tr.prod_no = pr.prod_no AND tr.BUYER_ID= '"+ buyerId + "'";
 		sql += " ORDER BY TRAN_NO";
 		
 		System.out.println("ProductDAO::Original SQL :: " + sql);
@@ -151,6 +155,11 @@ public class PurchaseDAO {
 		
 		while(rs.next()) {
 				Purchase purchase = new Purchase();
+				Product product = new Product();
+				product.setProdNo(Integer.parseInt(rs.getString("PROD_NO")));
+				product.setProdName(rs.getString("PROD_NAME"));
+				product.setPrice(Integer.parseInt(rs.getString("PRICE")));
+				purchase.setPurchaseProd(product);
 				purchase.setTranNo(rs.getInt("TRAN_NO"));
 				purchase.setReceiverName(rs.getString("RECEIVER_NAME"));
 				purchase.setReceiverPhone(rs.getString("RECEIVER_PHONE"));

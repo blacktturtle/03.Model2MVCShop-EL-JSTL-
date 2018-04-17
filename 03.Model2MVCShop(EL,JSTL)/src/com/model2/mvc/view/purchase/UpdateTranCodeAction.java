@@ -22,6 +22,7 @@ public class UpdateTranCodeAction extends Action{
 		System.out.println("UpdateTranCode 받아온 TranCode ::" + purchase.getTranCode());
 		
 		purchase.setTranCode("2");
+		System.out.println("배송정보바꾸고다시 : " + purchase);
 		
 		
 		purchaseService.updateTranCode(purchase);

@@ -1,9 +1,10 @@
-<%@page import="com.model2.mvc.service.product.impl.ProductServiceImpl"%>
-<%@page import="com.model2.mvc.service.product.ProductService"%>
-<%@page import="com.model2.mvc.service.product.dao.ProductDAO"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
+<%-- <%@page import="com.model2.mvc.service.product.impl.ProductServiceImpl"%>
+<%@page import="com.model2.mvc.service.product.ProductService"%>
+<%@page import="com.model2.mvc.service.product.dao.ProductDAO"%>
 <%@ page import="java.util.List"  %>
 <%@page import="com.model2.mvc.service.purchase.impl.PurchaseServiceImpl"%>
 <%@page import="com.model2.mvc.service.purchase.PurchaseService"%>
@@ -21,7 +22,7 @@
 	//==> null 을 ""(nullString)으로 변경
 	
 %>
-
+ --%>
 
 
 <html>
@@ -31,7 +32,7 @@
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
 <script type="text/javascript">
-function fncGetPurchaseList(currentPage) {
+function fncGetList(currentPage) {
 	document.getElementById("currentPage").value = currentPage;
    	document.detailForm.submit();		
 }
@@ -60,7 +61,8 @@ function fncGetPurchaseList(currentPage) {
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0"	style="margin-top: 10px;">
 	<tr>
-		<td colspan="11">전체 <%=resultPage.getTotalCount() %> 건수, 현재 <%= resultPage.getCurrentPage() %> 페이지</td>
+		<td colspan="11">전체 ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage } 페이지</td>
+<%-- 		<td colspan="11">전체 <%=resultPage.getTotalCount() %> 건수, 현재 <%= resultPage.getCurrentPage() %> 페이지</td> --%>
 	</tr>
 	<tr>
 		<td class="ct_list_b" width="100">No</td>
@@ -79,61 +81,91 @@ function fncGetPurchaseList(currentPage) {
 		<td colspan="11" bgcolor="808285" height="1"></td>
 	</tr>
 	
-	<% 	
+	
+	
+	
+	<%-- <% 	
 		for(int i=0; i<list.size(); i++) {
 			Purchase vo = (Purchase)list.get(i);
-	%>
-	<%
-		PurchaseDAO purchaseDAO = new PurchaseDAO();
+					
 		PurchaseService purchaseService = new PurchaseServiceImpl();
+		ProductService productService = new ProductServiceImpl();
 				
 		Purchase purchase =  purchaseService.getPurchase(vo.getTranNo());
-		System.out.println("코드 : " + purchase.getTranCode());
 		
-		ProductService productService = new ProductServiceImpl();
 		Product product = productService.getProduct2(vo.getTranNo());
-		%>
+		%> --%>
 		
+		<c:set var="i" value="0"/>
+		<c:forEach var="list" items="${list}">
+		<c:set var="i" value="${i+1}"/>
 	
 	<tr class="ct_list_pop">
 	<td align="center">
-			<a href="/getPurchase.do?tranNo=<%=vo.getTranNo() %>"><%=i+1 %></a>
+<%-- 			<a href="/getPurchase.do?tranNo=<%=vo.getTranNo() %>"><%=i+1 %></a> --%>
+			<a href="/getPurchase.do?tranNo=${list.tranNo}">${i}</a>
 		</td>
 		<td></td>
 		<td align="left">
-		<%if((purchase.getTranCode().trim().equals("1"))){%>
+		<c:if test="${list.tranCode=='1' }">
+			<a href="/getUser.do?userId=${user.userId}">${user.userId }</a>
+		</c:if>
+		<c:if test="${list.tranCode!='1' }">
+			${user.userId}
+		</c:if>
+		
+		
+	<%-- 	<%if((purchase.getTranCode().trim().equals("1"))){%>
 			<a href="/getUser.do?userId=<%=user.getUserId()%>"><%=user.getUserId() %></a>
 			<%}else{ %>
 			<%=user.getUserId() %>
-			<%} %>
+			<%} %> --%>
 		</td>
 		<td></td>
 		
-		<td align="left"><a href ="/getProduct.do?menu=completeSearch&prodNo=<%=product.getProdNo()%>"><%=product.getProdName() %></a></td>
+		<td align="left"><a href ="/getProduct.do?menu=completeSearch&prodNo=${list.purchaseProd.prodNo}">${list.purchaseProd.prodName}</a></td>
+<%-- 		<td align="left"><a href ="/getProduct.do?menu=completeSearch&prodNo=<%=product.getProdNo()%>"><%=product.getProdName() %></a></td> --%>
 		<td></td>
-		<td align="left"><%=product.getPrice() %></td>
+		<td align="left">${list.purchaseProd.price}</td>
+<%-- 		<td align="left"><%=product.getPrice() %></td> --%>
 		<td></td>
 		
-		<td> <%if((purchase.getTranCode().trim().equals("1"))){ %>
+		
+		
+		<td> 	
+		<c:if test="${list.tranCode=='1' }">
+		현재 구매완료 상태입니다.
+		</c:if>
+		<c:if test="${list.tranCode=='2' }">
+		현재 배송중 상태입니다.
+		</c:if>
+		<c:if test="${list.tranCode=='3' }">
+		현재 배송완료 상태입니다.
+		</c:if>		
+<%-- 		<%if((purchase.getTranCode().trim().equals("1"))){ %>
 		    현재 구매완료 상태입니다.  
 			<%}else if(purchase.getTranCode().trim().equals("2")) {%>
 			현재 배송중 상태입니다.
 			<%}else if(purchase.getTranCode().trim().equals("3")) {%>
 			현재 배송완료 상태입니다.
-		<%} %>
-		
+		<%} %> --%>
 		</td>
 		<td></td>
 		<td>
-		<%if(purchase.getTranCode().trim().equals("2")){ %>
+		<c:if test="${list.tranCode=='2' }">
+		<a href="/updateTranCodeByProd.do?tranNo=${list.tranNo }" >배송완료</a>
+		</c:if>
+		
+<%-- 		<%if(purchase.getTranCode().trim().equals("2")){ %>
 		<a href="/updateTranCodeByProd.do?tranNo=<%=vo.getTranNo()%>" >배송완료</a>
-		<%} %></td>
+		<%} %></td> --%>
 		</tr>
 		<tr>
 		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
 		</tr>
 	
-		<%} %>	
+		<%-- <%} %>	 --%>
+		</c:forEach>
 		
 	
 </table>
@@ -141,8 +173,8 @@ function fncGetPurchaseList(currentPage) {
 <table width="100%" border="0" cellspacing="0" cellpadding="0"	style="margin-top:10px;">
 	<tr>
 		<td align="center">
-		   <input type="hidden" id="currentPage" name="currentPage" value=""/>
-			<% if( resultPage.getCurrentPage() <= resultPage.getPageUnit() ){ %>
+		   <input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}"/>
+			<%-- <% if( resultPage.getCurrentPage() <= resultPage.getPageUnit() ){ %>
 					◀ 이전
 			<% }else{ %>
 					<a href="javascript:fncGetPurchaseList('<%=resultPage.getBeginUnitPage()-1%>')">◀ 이전</a>
@@ -156,7 +188,8 @@ function fncGetPurchaseList(currentPage) {
 					이후 ▶
 			<% }else{ %>
 					<a href="javascript:fncGetPurchaseList('<%=resultPage.getEndUnitPage()+1%>')">이후 ▶</a>
-			<% } %>		
+			<% } %>		 --%>
+			<jsp:include page="../common/pageNavigator.jsp"></jsp:include>
 		
 		</td>
 	</tr>	

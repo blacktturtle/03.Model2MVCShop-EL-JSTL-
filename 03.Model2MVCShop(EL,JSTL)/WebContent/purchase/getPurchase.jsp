@@ -1,9 +1,9 @@
-<%@page import="com.model2.mvc.service.domain.*"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
-<%Purchase purchaseVO = (Purchase)request.getAttribute("vo"); %>
+<%-- <%@page import="com.model2.mvc.service.domain.*"%>
+<%Purchase purchaseVO = (Purchase)request.getAttribute("vo"); %> --%>
 
 
 
@@ -49,7 +49,8 @@
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td width="105">
-					<%=purchaseVO.getPurchaseProd().getProdNo() %></td>
+					${vo.purchaseProd.prodNo}</td>
+<%-- 					<%=purchaseVO.getPurchaseProd().getProdNo() %></td> --%>
 					<td></td>
 				</tr>
 			</table>
@@ -63,7 +64,8 @@
 			구매자아이디 <img	src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><%=purchaseVO.getBuyer().getUserId() %></td>
+		<td class="ct_write01">${vo.buyer.userId }</td>
+<%-- 		<td class="ct_write01"><%=purchaseVO.getBuyer().getUserId() %></td> --%>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -73,11 +75,18 @@
 		<td width="104" class="ct_write">구매방법</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-			<%	if(purchaseVO.getPaymentOption().trim().equals("1")){%>
+		<c:if test="${vo.paymentOption=='1' }">
+		현금구매
+		</c:if>
+		<c:if test="${vo.paymentOption!='1' }">
+		신용구매
+		</c:if>
+		
+			<%-- <%	if(purchaseVO.getPaymentOption().trim().equals("1")){%>
 				현금구매
 			<%}else{ %>
 					신용구매
-			<%} %>
+			<%} %> --%>
 		</td>
 	</tr>
 	<tr>
@@ -86,7 +95,8 @@
 	<tr>
 		<td width="104" class="ct_write">구매자이름</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><%=purchaseVO.getReceiverName() %></td>
+		<td class="ct_write01">${vo.receiverName}</td>
+<%-- 		<td class="ct_write01"><%=purchaseVO.getReceiverName() %></td> --%>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -94,7 +104,8 @@
 	<tr>
 		<td width="104" class="ct_write">구매자연락처</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><%=purchaseVO.getReceiverPhone() %></td>
+		<td class="ct_write01">${vo.receiverPhone}</td>
+<%-- 		<td class="ct_write01"><%=purchaseVO.getReceiverPhone() %></td> --%>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -102,7 +113,8 @@
 	<tr>
 		<td width="104" class="ct_write">구매자주소</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><%=purchaseVO.getDivyAddr() %></td>
+		<td class="ct_write01">${vo.divyAddr}</td>
+<%-- 		<td class="ct_write01"><%=purchaseVO.getDivyAddr() %></td> --%>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -110,7 +122,8 @@
 	<tr>
 		<td width="104" class="ct_write">구매요청사항</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><%=purchaseVO.getDivyRequest() %></td>
+		<td class="ct_write01">${vo.divyRequest}</td>
+<%-- 		<td class="ct_write01"><%=purchaseVO.getDivyRequest() %></td> --%>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -118,7 +131,8 @@
 	<tr>
 		<td width="104" class="ct_write">배송희망일</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><%=purchaseVO.getDivyDate() %></td>
+		<td class="ct_write01">${vo.divyDate}</td>
+<%-- 		<td class="ct_write01"><%=purchaseVO.getDivyDate() %></td> --%>
 	</tr>
 
 	<tr>
@@ -128,7 +142,8 @@
 	<tr>
 		<td width="104" class="ct_write">주문일</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01"><%=purchaseVO.getOrderDate() %></td>
+		<td class="ct_write01">${vo.orderDate }</td>
+<%-- 		<td class="ct_write01"><%=purchaseVO.getOrderDate() %></td> --%>
 	</tr>
 
 	<tr>
@@ -147,7 +162,8 @@
 						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01"	style="padding-top: 3px;">
-						<a href="/updatePurchaseView.do?tranNo=<%=purchaseVO.getTranNo()%>">수정</a>
+						<a href="/updatePurchaseView.do?tranNo=${vo.tranNo}">수정</a>
+<%-- 						<a href="/updatePurchaseView.do?tranNo=<%=purchaseVO.getTranNo()%>">수정</a> --%>
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23"/>

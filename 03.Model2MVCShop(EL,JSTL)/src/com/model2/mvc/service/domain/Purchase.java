@@ -50,7 +50,7 @@ public class Purchase {
 		this.orderDate = orderDate;
 	}
 	public String getPaymentOption() {
-		return paymentOption;
+		return paymentOption.trim();
 	}
 	public void setPaymentOption(String paymentOption) {
 		this.paymentOption = paymentOption;
