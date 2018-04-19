@@ -29,7 +29,7 @@ public class PurchaseDAO {
 
 		Connection con = DBUtil.getConnection();
 
-		String sql = "INSERT INTO transaction values (seq_product_prod_no.nextval,?,?,?,?,?,?,?,?,sysdate,?)";
+		String sql = "INSERT INTO TRANSACTION VALUES (seq_product_prod_no.nextval,?,?,?,?,?,?,?,?,sysdate,?,?)";
 
 		PreparedStatement stmt = con.prepareStatement(sql);
 
@@ -42,6 +42,7 @@ public class PurchaseDAO {
 		stmt.setString(7, purchase.getDivyRequest()); // 요구사항
 		stmt.setString(8, purchase.getTranCode()); // 구매상태코드
 		stmt.setString(9, purchase.getDivyDate()); // 배송희망일자
+		stmt.setInt(10, purchase.getIsPurchaseCode()); // 구매여부 코드 (1전달)
 
 		System.out.println("DB에 insert : " + purchase);
 
@@ -49,12 +50,22 @@ public class PurchaseDAO {
 
 		con.close();
 	}
+	
+//	public void deletePurchase(int tranNo) throws Exception{
+//		Connection con = DBUtil.getConnection();
+//		
+//		String sql = "DELETE FROM TRANSACTION WHERE TRAN_NO="+tranNo;
+//		PreparedStatement stmt = con.prepareStatement(sql);
+//		stmt.executeUpdate();
+//		con.close();
+//		
+//	}
 
 	public Purchase findPurchase(int tranNo) throws Exception {
 		// 구매번호를 받음
 		Connection con = DBUtil.getConnection();
 
-		String sql = "select * from Transaction where TRAN_NO=?";
+		String sql = "SELECT * FROM TRANSACTION WHERE TRAN_NO=?";
 
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.setInt(1, tranNo);
@@ -78,6 +89,8 @@ public class PurchaseDAO {
 			purchase.setTranCode(rs.getString("TRAN_STATUS_CODE"));
 			purchase.setOrderDate(rs.getDate("ORDER_DATA"));
 			purchase.setDivyDate(rs.getString("DLVY_DATE"));
+			purchase.setIsPurchaseCode(rs.getInt("IS_PURCHASE_CODE"));
+			
 
 		}
 
@@ -86,15 +99,14 @@ public class PurchaseDAO {
 		return purchase;
 	}
 	
-
 	public Purchase findPurchase2(int prodNo) throws Exception {
 		// 구매번호를 받음
 		
 		Connection con = DBUtil.getConnection();
 	
-		String sql = "SELECT tr.TRAN_NO,tr.PROD_NO,tr.BUYER_ID,tr.PAYMENT_OPTION,tr.RECEIVER_NAME,tr.RECEIVER_PHONE,tr.DEMAILADDR,tr.DLVY_REQUEST,NVL(tr.TRAN_STATUS_CODE,0) TRAN_STATUS_CODE,tr.ORDER_DATA,tr.DLVY_DATE"
-				+ " FROM transaction tr,product pr"
-				+ " where tr.prod_no(+) = pr.prod_no AND pr.prod_no= ?";
+		String sql = "SELECT tr.TRAN_NO,tr.PROD_NO,tr.BUYER_ID,tr.PAYMENT_OPTION,tr.RECEIVER_NAME,tr.RECEIVER_PHONE,tr.DEMAILADDR,tr.DLVY_REQUEST,NVL(tr.TRAN_STATUS_CODE,0) TRAN_STATUS_CODE,tr.ORDER_DATA,tr.DLVY_DATE, tr.IS_PURCHASE_CODE "
+				+ " FROM TRANSACTION tr,PRODUCT pr"
+				+ " WHERE tr.prod_no(+) = pr.prod_no AND pr.prod_no= ?";
 
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.setInt(1, prodNo);
@@ -116,6 +128,7 @@ public class PurchaseDAO {
 			purchase.setTranCode(rs.getString("TRAN_STATUS_CODE"));
 			purchase.setOrderDate(rs.getDate("ORDER_DATA"));
 			purchase.setDivyDate(rs.getString("DLVY_DATE"));
+			purchase.setIsPurchaseCode(rs.getInt("IS_PURCHASE_CODE"));
 
 		}
 
@@ -123,8 +136,7 @@ public class PurchaseDAO {
 
 		return purchase;
 	}
-	
-	
+
 	
 	
 	public Map<String, Object> getPurchaseList(Search search, String buyerId) throws Exception {
@@ -132,9 +144,8 @@ public class PurchaseDAO {
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		Connection con = DBUtil.getConnection();
-		System.out.println("바이어아이디 : " + buyerId);
-
-		String sql = "SELECT pr.prod_no, pr.prod_name,pr.price,tr.TRAN_NO,tr.RECEIVER_NAME,tr.RECEIVER_PHONE,tr.TRAN_STATUS_CODE " 
+		
+		String sql = "SELECT pr.PROD_NO, pr.PROD_NAME, pr.PRICE, tr.TRAN_NO, tr.RECEIVER_NAME, tr.RECEIVER_PHONE, tr.TRAN_STATUS_CODE, tr.IS_PURCHASE_CODE " 
 				+ " FROM TRANSACTION tr,PRODUCT pr "
 				+ " WHERE tr.prod_no = pr.prod_no AND tr.BUYER_ID= '"+ buyerId + "'";
 		sql += " ORDER BY TRAN_NO";
@@ -164,6 +175,7 @@ public class PurchaseDAO {
 				purchase.setReceiverName(rs.getString("RECEIVER_NAME"));
 				purchase.setReceiverPhone(rs.getString("RECEIVER_PHONE"));
 				purchase.setTranCode(rs.getString("TRAN_STATUS_CODE"));
+				purchase.setIsPurchaseCode(rs.getInt("IS_PURCHASE_CODE"));
 
 				list.add(purchase); // 리스트에 추가
 		}
@@ -181,7 +193,7 @@ public class PurchaseDAO {
 
 		Connection con = DBUtil.getConnection();
 
-		String sql = "UPDATE transaction SET PAYMENT_OPTION=?, RECEIVER_NAME= ?, RECEIVER_PHONE =?, DEMAILADDR=?,DLVY_REQUEST=? ,DLVY_DATE=? ,TRAN_STATUS_CODE=? where TRAN_NO=?";
+		String sql = "UPDATE TRANSACTION SET PAYMENT_OPTION=?, RECEIVER_NAME= ?, RECEIVER_PHONE =?, DEMAILADDR=?,DLVY_REQUEST=? ,DLVY_DATE=? ,TRAN_STATUS_CODE=?,IS_PURCHASE_CODE=? where TRAN_NO=?";
 
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.setString(1, purchase.getPaymentOption());
@@ -191,7 +203,8 @@ public class PurchaseDAO {
 		stmt.setString(5, purchase.getDivyRequest());
 		stmt.setString(6, purchase.getDivyDate());		
 		stmt.setString(7, purchase.getTranCode());
-		stmt.setInt(8, purchase.getTranNo());
+		stmt.setInt(8, purchase.getIsPurchaseCode());
+		stmt.setInt(9, purchase.getTranNo());
 		stmt.executeUpdate();
 
 		con.close();

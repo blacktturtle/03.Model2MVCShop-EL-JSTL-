@@ -164,10 +164,7 @@ public class ProductDAO {
 	}
 	
 	 public void updateProduct(Product product) throws Exception {
-	
 
-	 
-	 
 	Connection con = DBUtil.getConnection();	 
 	 
 	

@@ -17,12 +17,15 @@ public class AddPurchaseAction extends Action {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		System.out.println(user.getUserName());
-		Product product = new Product();
+		//Product product = new Product();
+		
+
+		//product.setProdNo(Integer.parseInt(request.getParameter("prodNo"))); // 다시해볼것 productVO따오는방법 생각
+		//purchase.setPurchaseProd(product);
+		
+		
+		
 		Purchase purchase = new Purchase();
-
-		product.setProdNo(Integer.parseInt(request.getParameter("prodNo"))); // 다시해볼것 productVO따오는방법 생각
-
-		purchase.setPurchaseProd(product);
 		purchase.setBuyer(user);
 		purchase.setPurchaseProd(new ProductDAO().findProduct(Integer.parseInt(request.getParameter("prodNo"))));
 		purchase.setPaymentOption(request.getParameter("paymentOption"));
@@ -32,6 +35,7 @@ public class AddPurchaseAction extends Action {
 		purchase.setDivyRequest(request.getParameter("receiverRequest"));
 		purchase.setTranCode("1"); // 구매상태코드??
 		purchase.setDivyDate(request.getParameter("receiverDate"));
+		purchase.setIsPurchaseCode(1);
 
 		PurchaseService service = new PurchaseServiceImpl();
 

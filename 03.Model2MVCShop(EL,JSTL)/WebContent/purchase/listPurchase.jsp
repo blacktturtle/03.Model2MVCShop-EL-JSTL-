@@ -152,9 +152,19 @@ function fncGetList(currentPage) {
 		</td>
 		<td></td>
 		<td>
-		<c:if test="${list.tranCode=='2' }">
-		<a href="/updateTranCodeByProd.do?tranNo=${list.tranNo }" >배송완료</a>
+		<c:if test="${list.isPurchaseCode=='0' }">
+		구매취소 되었습니다.
 		</c:if>
+		<c:if test="${list.isPurchaseCode=='1' }">
+			<c:if test="${list.tranCode=='2' }">
+				<a href="/updateTranCodeByProd.do?tranNo=${list.tranNo}" >배송완료</a>
+			</c:if>			
+			<c:if test="${list.tranCode=='1' }">
+				<a href="/updateTranCodeByProd.do?tranNo=${list.tranNo}" >구매취소</a>
+			</c:if>			
+			
+		</c:if>
+		
 		
 <%-- 		<%if(purchase.getTranCode().trim().equals("2")){ %>
 		<a href="/updateTranCodeByProd.do?tranNo=<%=vo.getTranNo()%>" >배송완료</a>
