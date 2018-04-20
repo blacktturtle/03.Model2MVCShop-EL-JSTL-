@@ -112,6 +112,7 @@ public class ProductDAO {
 		Connection con = DBUtil.getConnection();
 
 		String sql = "SELECT * FROM PRODUCT ";
+		
 
 		if (search.getSearchCondition() != null) {
 			if (search.getSearchCondition().equals("0") && !search.getSearchKeyword().equals("")) { // 0 : 상품번호일 경우
@@ -124,7 +125,14 @@ public class ProductDAO {
 				sql += " WHERE PRICE LIKE '%" + search.getSearchKeyword() + "%'";
 			}
 		}
-		sql += "ORDER BY prod_no";
+		if(search.getPriceUpDown()==0) { // 처음들어왔을때
+			sql += "ORDER BY prod_no";	
+		}else if(search.getPriceUpDown()==1) { //높은가격순
+			sql += "ORDER BY PRICE DESC";
+		}else if(search.getPriceUpDown()==2) { // 낮은가격순
+			sql += "ORDER BY PRICE ASC";
+		}
+		
 
 		System.out.println("ProductDAO::Original SQL :: " + sql);
 

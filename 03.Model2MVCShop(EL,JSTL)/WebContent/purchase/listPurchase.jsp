@@ -129,9 +129,7 @@ function fncGetList(currentPage) {
 		<td align="left">${list.purchaseProd.price}</td>
 <%-- 		<td align="left"><%=product.getPrice() %></td> --%>
 		<td></td>
-		
-		
-		
+				
 		<td> 	
 		<c:if test="${list.tranCode=='1' }">
 		현재 구매완료 상태입니다.
@@ -164,12 +162,15 @@ function fncGetList(currentPage) {
 			</c:if>			
 			
 		</c:if>
+		</td>
+		<td></td>
+		
 		
 		
 <%-- 		<%if(purchase.getTranCode().trim().equals("2")){ %>
 		<a href="/updateTranCodeByProd.do?tranNo=<%=vo.getTranNo()%>" >배송완료</a>
 		<%} %></td> --%>
-		</tr>
+		
 		<tr>
 		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
 		</tr>

@@ -29,6 +29,16 @@ public class ListProductAction extends Action {
 		if (request.getParameter("currentPage") != null) {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
+		
+		if(request.getParameter("check") !=null) {
+			System.out.println("체크박스 값은? " + request.getParameter("check"));
+			if(request.getParameter("check").equals("1")) {
+				search.setPriceUpDown(1);
+			}
+			if(request.getParameter("check").equals("2")) {
+				search.setPriceUpDown(2);
+			}
+		}	
 
 		search.setCurrentPage(currentPage);
 		search.setSearchCondition(request.getParameter("searchCondition"));
@@ -58,7 +68,8 @@ public class ListProductAction extends Action {
 			
 			list2.add(purchase);
 		}
-		/////////
+		
+
 
 		request.setAttribute("purchase", list2);
 		request.setAttribute("list", map.get("list"));

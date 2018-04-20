@@ -31,6 +31,10 @@ function fncGetList(currentPage) {
    	document.detailForm.submit();		
 }
 </script>
+
+
+
+
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
@@ -47,8 +51,30 @@ function fncGetList(currentPage) {
 		<td background="/images/ct_ttl_img02.gif" width="100%" style="padding-left:10px;">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
-					<td width="93%" class="ct_ttl01">상품 목록조회</td>
+					<td width="93%" class="ct_ttl01" align="center">상품 목록조회</td>
 				</tr>
+			</table>
+		</td>
+		<td width="12" height="37">
+			<img src="/images/ct_ttl_img03.gif" width="12" height="37"/>
+		</td>
+	</tr>
+</table>
+
+
+<table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
+	<tr>
+		<td width="15" height="37">
+			<img src="/images/ct_ttl_img01.gif" width="15" height="37"/>
+		</td>
+		<td background="/images/ct_ttl_img02.gif" width="100%" style="padding-left:10px;">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					
+					<td width="90%" class="ct_ttl01" align="right">높은가격순(<input type="radio" name="check"  value="1"  ${search.priceUpDown=='1' ?"checked":"" }/>)</td>
+					<td width="10%" class="ct_ttl01" align="right">낮은가격순(<input type="radio" name="check" value="2"  ${search.priceUpDown=='2' ?"checked":"" }/>)</td>
+				</tr>
+				
 			</table>
 		</td>
 		<td width="12" height="37">
@@ -87,9 +113,10 @@ function fncGetList(currentPage) {
 						
 			</select>
 			<%-- <input type="text" name="searchKeyword"  value ="<%=searchKeyword %>"class="ct_input_g" style="width:200px; height:19px"/> --%>
-			<input type="text" name="searchKeyword"  value ="${search.searchKeyword}"class="ct_input_g" style="width:200px; height:19px"/>
+			
+			
+	<input type="text" name="searchKeyword"  value ="${search.searchKeyword}"class="ct_input_g" style="width:200px; height:19px"/>
 		</td>
-		
 		<td align="right" width="70">
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tr>
@@ -105,6 +132,7 @@ function fncGetList(currentPage) {
 				</tr>
 			</table>
 		</td>
+	
 	</tr>
 </table>
 
@@ -119,7 +147,7 @@ function fncGetList(currentPage) {
 		<td class="ct_line02"></td>
 		<td class="ct_list_b" width="150">상품명</td>
 		<td class="ct_line02"></td>
-		<td class="ct_list_b" width="150">오름순(<input type="checkbox" name="check" value="check" />)가격</td>
+		<td class="ct_list_b" width="150">가격</td>
 		<td class="ct_line02"></td>
 		<td class="ct_list_b">등록일</td>	
 		<td class="ct_line02"></td>

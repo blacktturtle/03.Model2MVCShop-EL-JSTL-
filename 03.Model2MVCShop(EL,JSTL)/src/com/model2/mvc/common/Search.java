@@ -8,6 +8,8 @@ public class Search {
 	private String searchCondition;
 	private String searchKeyword;
 	private int pageSize;
+	private int priceUpDown;
+	
 	
 	///Constructor
 	public Search() {
@@ -39,6 +41,14 @@ public class Search {
 	}
 	public void setSearchKeyword(String searchKeyword) {
 		this.searchKeyword = searchKeyword;
+	}
+
+	public int getPriceUpDown() {
+		return priceUpDown;
+	}
+
+	public void setPriceUpDown(int priceUpDown) {
+		this.priceUpDown = priceUpDown;
 	}
 
 	@Override

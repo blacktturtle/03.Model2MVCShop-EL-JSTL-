@@ -147,7 +147,7 @@ public class PurchaseDAO {
 		
 		String sql = "SELECT pr.PROD_NO, pr.PROD_NAME, pr.PRICE, tr.TRAN_NO, tr.RECEIVER_NAME, tr.RECEIVER_PHONE, tr.TRAN_STATUS_CODE, tr.IS_PURCHASE_CODE " 
 				+ " FROM TRANSACTION tr,PRODUCT pr "
-				+ " WHERE tr.prod_no = pr.prod_no AND tr.BUYER_ID= '"+ buyerId + "'";
+				+ " WHERE tr.PROD_NO = pr.PROD_NO AND tr.BUYER_ID= '"+ buyerId + "'";
 		sql += " ORDER BY TRAN_NO";
 		
 		System.out.println("ProductDAO::Original SQL :: " + sql);
