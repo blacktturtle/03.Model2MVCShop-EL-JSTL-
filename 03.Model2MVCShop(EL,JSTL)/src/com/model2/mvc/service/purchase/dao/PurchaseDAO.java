@@ -29,7 +29,7 @@ public class PurchaseDAO {
 
 		Connection con = DBUtil.getConnection();
 
-		String sql = "INSERT INTO TRANSACTION VALUES (seq_product_prod_no.nextval,?,?,?,?,?,?,?,?,sysdate,?,?)";
+		String sql = "INSERT INTO TRANSACTION VALUES (seq_product_prod_no.nextval,?,?,?,?,?,?,?,?,sysdate,?,?,?)";
 
 		PreparedStatement stmt = con.prepareStatement(sql);
 
@@ -43,6 +43,7 @@ public class PurchaseDAO {
 		stmt.setString(8, purchase.getTranCode()); // 구매상태코드
 		stmt.setString(9, purchase.getDivyDate()); // 배송희망일자
 		stmt.setInt(10, purchase.getIsPurchaseCode()); // 구매여부 코드 (1전달)
+		stmt.setInt(11, purchase.getQuantity()); // 구매수량
 
 		System.out.println("DB에 insert : " + purchase);
 
@@ -90,6 +91,7 @@ public class PurchaseDAO {
 			purchase.setOrderDate(rs.getDate("ORDER_DATA"));
 			purchase.setDivyDate(rs.getString("DLVY_DATE"));
 			purchase.setIsPurchaseCode(rs.getInt("IS_PURCHASE_CODE"));
+			purchase.setQuantity(rs.getInt("QUANTITY"));
 			
 
 		}
@@ -104,7 +106,7 @@ public class PurchaseDAO {
 		
 		Connection con = DBUtil.getConnection();
 	
-		String sql = "SELECT tr.TRAN_NO,tr.PROD_NO,tr.BUYER_ID,tr.PAYMENT_OPTION,tr.RECEIVER_NAME,tr.RECEIVER_PHONE,tr.DEMAILADDR,tr.DLVY_REQUEST,NVL(tr.TRAN_STATUS_CODE,0) TRAN_STATUS_CODE,tr.ORDER_DATA,tr.DLVY_DATE, tr.IS_PURCHASE_CODE "
+		String sql = "SELECT tr.TRAN_NO,tr.PROD_NO,tr.BUYER_ID,tr.PAYMENT_OPTION,tr.RECEIVER_NAME,tr.RECEIVER_PHONE,tr.DEMAILADDR,tr.DLVY_REQUEST,NVL(tr.TRAN_STATUS_CODE,0) TRAN_STATUS_CODE,tr.ORDER_DATA,tr.DLVY_DATE, tr.IS_PURCHASE_CODE, tr.QUANTITY "
 				+ " FROM TRANSACTION tr,PRODUCT pr"
 				+ " WHERE tr.prod_no(+) = pr.prod_no AND pr.prod_no= ?";
 
@@ -129,6 +131,7 @@ public class PurchaseDAO {
 			purchase.setOrderDate(rs.getDate("ORDER_DATA"));
 			purchase.setDivyDate(rs.getString("DLVY_DATE"));
 			purchase.setIsPurchaseCode(rs.getInt("IS_PURCHASE_CODE"));
+			purchase.setQuantity(rs.getInt("QUANTITY"));
 
 		}
 
@@ -145,7 +148,7 @@ public class PurchaseDAO {
 
 		Connection con = DBUtil.getConnection();
 		
-		String sql = "SELECT pr.PROD_NO, pr.PROD_NAME, pr.PRICE, tr.TRAN_NO, tr.RECEIVER_NAME, tr.RECEIVER_PHONE, tr.TRAN_STATUS_CODE, tr.IS_PURCHASE_CODE " 
+		String sql = "SELECT pr.PROD_NO, pr.PROD_NAME, pr.PRICE, tr.QUANTITY, tr.TRAN_NO, tr.RECEIVER_NAME, tr.RECEIVER_PHONE, tr.TRAN_STATUS_CODE, tr.IS_PURCHASE_CODE " 
 				+ " FROM TRANSACTION tr,PRODUCT pr "
 				+ " WHERE tr.PROD_NO = pr.PROD_NO AND tr.BUYER_ID= '"+ buyerId + "'";
 		sql += " ORDER BY TRAN_NO";
@@ -176,6 +179,8 @@ public class PurchaseDAO {
 				purchase.setReceiverPhone(rs.getString("RECEIVER_PHONE"));
 				purchase.setTranCode(rs.getString("TRAN_STATUS_CODE"));
 				purchase.setIsPurchaseCode(rs.getInt("IS_PURCHASE_CODE"));
+				purchase.setQuantity(rs.getInt("QUANTITY"));
+				
 
 				list.add(purchase); // 리스트에 추가
 		}
@@ -193,7 +198,8 @@ public class PurchaseDAO {
 
 		Connection con = DBUtil.getConnection();
 
-		String sql = "UPDATE TRANSACTION SET PAYMENT_OPTION=?, RECEIVER_NAME= ?, RECEIVER_PHONE =?, DEMAILADDR=?,DLVY_REQUEST=? ,DLVY_DATE=? ,TRAN_STATUS_CODE=?,IS_PURCHASE_CODE=? where TRAN_NO=?";
+		String sql = "UPDATE TRANSACTION SET PAYMENT_OPTION=?, RECEIVER_NAME= ?, RECEIVER_PHONE =?, "
+				+ "DEMAILADDR=?,DLVY_REQUEST=? ,DLVY_DATE=? ,TRAN_STATUS_CODE=?,IS_PURCHASE_CODE=? where TRAN_NO=?";
 
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.setString(1, purchase.getPaymentOption());

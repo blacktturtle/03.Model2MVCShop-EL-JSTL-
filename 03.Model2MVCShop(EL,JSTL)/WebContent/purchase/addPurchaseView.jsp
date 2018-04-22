@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--  <%@page import="com.model2.mvc.service.domain.*"%>
 
 <%Product product= (Product)request.getAttribute("vo"); 
@@ -134,6 +134,33 @@ function fncAddPurchase() {
 <%-- 		<td class="ct_write01"><%=user.getUserId()%></td>
 		<input type="hidden" name="buyerId" value="<%=user.getUserId() %>" /> --%>
 	</tr>
+	
+	<tr>
+		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
+	</tr>
+	<tr>
+		<td width="104" class="ct_write">구매수량</td>
+		<td bgcolor="D6D6D6" width="1"></td>
+		<td class="ct_write01">
+			<select 	name="quantity"		class="ct_input_g" 
+							style="width: 100px; height: 19px" maxLength="20">
+				<c:if test="${vo.quantity <=10 }">
+					<c:forEach var="i" begin="1" end="${vo.quantity}" step="1">
+						<option value="${i}">${i }</option>
+					</c:forEach>
+				</c:if>
+				
+				<c:if test="${vo.quantity >10 }">
+					<c:forEach var="i" begin="1" end="10" step="1">
+						<option value="${i}">${i}</option>
+					</c:forEach>
+				</c:if>
+		
+			</select>
+		</td>
+	</tr>
+	
+	
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>

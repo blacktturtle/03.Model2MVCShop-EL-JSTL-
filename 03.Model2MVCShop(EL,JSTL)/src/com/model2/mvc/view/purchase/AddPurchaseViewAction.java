@@ -5,8 +5,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.model2.mvc.framework.Action;
 import com.model2.mvc.service.domain.Product;
+import com.model2.mvc.service.domain.Purchase;
 import com.model2.mvc.service.product.ProductService;
 import com.model2.mvc.service.product.impl.ProductServiceImpl;
+import com.model2.mvc.service.purchase.PurchaseService;
+import com.model2.mvc.service.purchase.dao.PurchaseDAO;
+import com.model2.mvc.service.purchase.impl.PurchaseServiceImpl;
 
 public class AddPurchaseViewAction extends Action {
 
@@ -17,9 +21,12 @@ public class AddPurchaseViewAction extends Action {
 		
 		Product vo = new Product();
 		ProductService service = new ProductServiceImpl();
+
 		vo = service.getProduct(prodNo);
+	
 		
-		request.setAttribute("vo", vo);
+		request.setAttribute("vo", vo);		
+
 		
 		return "forward:/purchase/addPurchaseView.jsp";
 	}

@@ -19,6 +19,7 @@ public class AddProductAction extends Action{
 		product.setProdDetail(request.getParameter("prodDetail"));
 		product.setManuDate(request.getParameter("manuDate"));
 		product.setPrice(Integer.parseInt(request.getParameter("price")));
+		product.setQuantity(Integer.parseInt(request.getParameter("quantity")));
 		product.setFileName(request.getParameter("fileName"));
 		
 		System.out.println("등록된 상품 정보 : " +product);

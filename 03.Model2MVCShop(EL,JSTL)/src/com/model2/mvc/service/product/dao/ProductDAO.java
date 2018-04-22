@@ -24,7 +24,7 @@ public class ProductDAO {
 
 		Connection con = DBUtil.getConnection();
 
-		String sql = "INSERT INTO PRODUCT VALUES (seq_product_prod_no.nextval,?,?,?,?,?,SYSDATE)";
+		String sql = "INSERT INTO PRODUCT VALUES (seq_product_prod_no.nextval,?,?,?,?,?,SYSDATE,?)";
 
 		PreparedStatement stmt = con.prepareStatement(sql);
 
@@ -33,6 +33,7 @@ public class ProductDAO {
 		stmt.setString(3, product.getManuDate().replace("-", "")); // 상품제조일자
 		stmt.setInt(4, product.getPrice()); // 상품가격
 		stmt.setString(5, product.getFileName()); // 이미지파일
+		stmt.setInt(6, product.getQuantity()); // 수량
 		stmt.executeUpdate();
 
 		con.close();
@@ -60,6 +61,7 @@ public class ProductDAO {
 			product.setManuDate(rs.getString("MANUFACTURE_DAY"));
 			product.setPrice(rs.getInt("PRICE"));
 			product.setFileName(rs.getString("IMAGE_FILE"));
+			product.setQuantity(rs.getInt("QUANTITY"));
 			product.setRegDate(rs.getDate("REG_DATE"));
 
 		}
@@ -76,9 +78,9 @@ public class ProductDAO {
 		Connection con = DBUtil.getConnection();	
 		
 
-		String sql = "SELECT pr.PROD_NO , pr.PROD_NAME, pr.PROD_DETAIL,pr.MANUFACTURE_DAY,pr.PRICE,pr.IMAGE_FILE,pr.REG_DATE "
-				+ " from product pr, transaction tr"
-				+ " where pr.prod_no = tr.prod_no AND tr.tran_no=?";
+		String sql = "SELECT pr.PROD_NO , pr.PROD_NAME, pr.PROD_DETAIL,pr.MANUFACTURE_DAY,pr.PRICE,pr.IMAGE_FILE,pr.REG_DATE, pr.QUANTITY "
+				+ " FROM PRODUCT pr, TRANSACTION tr"
+				+ " WHERE pr.PROD_NO = tr.PROD_NO AND tr.TRAN_NO=?";
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.setInt(1, tranNo);
 
@@ -94,6 +96,7 @@ public class ProductDAO {
 			product.setPrice(rs.getInt("PRICE"));
 			product.setFileName(rs.getString("IMAGE_FILE"));
 			product.setRegDate(rs.getDate("REG_DATE"));
+			product.setQuantity(rs.getInt("QUANTITY"));
 
 		}
 		rs.close();
@@ -157,6 +160,7 @@ public class ProductDAO {
 			product.setManuDate(rs.getString("MANUFACTURE_DAY"));
 			product.setPrice(rs.getInt("PRICE"));
 			product.setFileName(rs.getString("IMAGE_FILE"));
+			product.setQuantity(rs.getInt("QUANTITY"));
 			product.setRegDate(rs.getDate("REG_DATE"));
 			System.out.println("리스트 출력할때 레코드 설정" + product);
 			list.add(product); // 리스트에 추가
@@ -176,9 +180,9 @@ public class ProductDAO {
 	Connection con = DBUtil.getConnection();	 
 	 
 	
-	 String sql = "update PRODUCT set "
-	 		+ "PROD_NAME=?,PROD_DETAIL=?,MANUFACTURE_DAY=?,PRICE=?, IMAGE_FILE=? "
-	 		+ "where PROD_NO=?";
+	 String sql = "UPDATE PRODUCT SET "
+	 		+ "PROD_NAME=?,PROD_DETAIL=?,MANUFACTURE_DAY=?,PRICE=?, IMAGE_FILE=?, QUANTITY=? "
+	 		+ " WHERE PROD_NO=?";
 	
 	 PreparedStatement stmt = con.prepareStatement(sql);
 	 stmt.setString(1, product.getProdName());
@@ -186,7 +190,8 @@ public class ProductDAO {
 	 stmt.setString(3, product.getManuDate());
 	 stmt.setInt(4, product.getPrice());
 	 stmt.setString(5, product.getFileName());
-	 stmt.setInt(6, product.getProdNo());
+	 stmt.setInt(6, product.getQuantity());
+	 stmt.setInt(7, product.getProdNo());
 	 stmt.executeUpdate();
 	
 	 con.close();

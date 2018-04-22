@@ -1,8 +1,8 @@
-<%@page import="com.model2.mvc.service.domain.*"%>
+<%-- <%@page import="com.model2.mvc.service.domain.*"%> --%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 
-<%Product vo = (Product)request.getAttribute("vo");%>
+<%-- <%Product vo = (Product)request.getAttribute("vo");%> --%>
 
 
 <html>
@@ -88,6 +88,18 @@
 <%-- 		<td class="ct_write01"><%=vo.getPrice() %></td> --%>
 		<td class="ct_write01">${vo.price}</td>
 	</tr>
+		<tr>
+		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
+	</tr>
+		<tr>
+		<td width="104" class="ct_write">
+			¼ö·®<img 	src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
+		</td>
+		<td bgcolor="D6D6D6" width="1"></td>
+<%-- 		<td class="ct_write01"><%=vo.getPrice() %></td> --%>
+		<td class="ct_write01">${vo.quantity}</td>
+	</tr>
+	
 
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>

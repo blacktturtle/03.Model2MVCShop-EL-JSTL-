@@ -29,6 +29,12 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>구매수량</td>
+		<td>${vo.quantity} 개</td>
+<%-- 		<td><%=vo.getBuyer().getUserId() %></td> --%>
+		<td></td>
+	</tr>
+	<tr>
 		<td>구매방법</td>
 		<td>
 		

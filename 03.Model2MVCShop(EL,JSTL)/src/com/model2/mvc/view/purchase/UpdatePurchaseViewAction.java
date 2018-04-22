@@ -13,6 +13,7 @@ public class UpdatePurchaseViewAction extends Action {
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		int tranNo = Integer.parseInt(request.getParameter("tranNo"));
+		System.out.println("받은 트랜넘버" + tranNo);
 		
 		PurchaseService service = new PurchaseServiceImpl();
 		Purchase purchase = service.getPurchase(tranNo);

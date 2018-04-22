@@ -149,6 +149,8 @@ function fncGetList(currentPage) {
 		<td class="ct_line02"></td>
 		<td class="ct_list_b" width="150">가격</td>
 		<td class="ct_line02"></td>
+		<td class="ct_list_b" width="150">수량</td>
+		<td class="ct_line02"></td>
 		<td class="ct_list_b">등록일</td>	
 		<td class="ct_line02"></td>
 		<td class="ct_list_b">현재상태</td>	
@@ -177,11 +179,11 @@ function fncGetList(currentPage) {
 		<td align="center">${i}</td>
 		<td></td>
 				<td align="left">
-				<c:if test="${purchase[i-1].tranCode=='0'}">
+				<c:if test="${product.quantity!='0'}">
 					<a href="/getProduct.do?prodNo=${product.prodNo}&menu=search">${product.prodName}</a>
 				</c:if>
 			
-				<c:if test="${purchase[i-1].tranCode!='0'}">
+				<c:if test="${product.quantity=='0' }">
 					<a href="/getProduct.do?prodNo=${product.prodNo}&menu=completeSearch">${product.prodName}</a>
 					</c:if>
 					<%-- <%} %> --%>
@@ -190,16 +192,19 @@ function fncGetList(currentPage) {
 		<td></td>
 		<td align="left">${product.price}</td>
 		<td></td>
+		<td align="left">${product.quantity}</td>
+		<td></td>
 		<td align="left">${product.regDate}</td>
 		<td></td>
 		<td align="left">
 		
-		<c:if test="${purchase[i-1].tranCode=='0' }">
-		 	판매중
-		 </c:if>
-		<c:if test="${purchase[i-1].tranCode!='0' }">
+		<c:if test="${product.quantity=='0' }">
 		 	재고없음
 		 </c:if>
+		<c:if test="${product.quantity !='0' }">
+		 	판매중
+		 </c:if>
+		
 		
 		
 		</td>	

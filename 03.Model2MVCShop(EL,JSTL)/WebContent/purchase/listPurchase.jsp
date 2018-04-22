@@ -73,12 +73,14 @@ function fncGetList(currentPage) {
 		<td class="ct_line02"></td>
 		<td class="ct_list_b">상품가격</td>
 		<td class="ct_line02"></td>
+		<td class="ct_list_b">구매수량</td>
+		<td class="ct_line02"></td>
 		<td class="ct_list_b">배송현황</td>
 		<td class="ct_line02"></td>
 		<td class="ct_list_b">정보수정</td>
 	</tr>
 	<tr>
-		<td colspan="11" bgcolor="808285" height="1"></td>
+		<td colspan="20" bgcolor="808285" height="1"></td>
 	</tr>
 	
 	
@@ -129,8 +131,11 @@ function fncGetList(currentPage) {
 		<td align="left">${list.purchaseProd.price}</td>
 <%-- 		<td align="left"><%=product.getPrice() %></td> --%>
 		<td></td>
+		<td align="left">${list.quantity}</td>
+<%-- 		<td align="left"><%=product.getPrice() %></td> --%>
+		<td></td>
 				
-		<td> 	
+		<td align="left"> 	
 		<c:if test="${list.tranCode=='1' }">
 		현재 구매완료 상태입니다.
 		</c:if>
@@ -140,19 +145,14 @@ function fncGetList(currentPage) {
 		<c:if test="${list.tranCode=='3' }">
 		현재 배송완료 상태입니다.
 		</c:if>		
-<%-- 		<%if((purchase.getTranCode().trim().equals("1"))){ %>
-		    현재 구매완료 상태입니다.  
-			<%}else if(purchase.getTranCode().trim().equals("2")) {%>
-			현재 배송중 상태입니다.
-			<%}else if(purchase.getTranCode().trim().equals("3")) {%>
-			현재 배송완료 상태입니다.
-		<%} %> --%>
+
 		</td>
 		<td></td>
-		<td>
+		<td align="left">
 		<c:if test="${list.isPurchaseCode=='0' }">
 		구매취소 되었습니다.
 		</c:if>
+		
 		<c:if test="${list.isPurchaseCode=='1' }">
 			<c:if test="${list.tranCode=='2' }">
 				<a href="/updateTranCodeByProd.do?tranNo=${list.tranNo}" >배송완료</a>
@@ -160,11 +160,11 @@ function fncGetList(currentPage) {
 			<c:if test="${list.tranCode=='1' }">
 				<a href="/updateTranCodeByProd.do?tranNo=${list.tranNo}" >구매취소</a>
 			</c:if>			
-			
 		</c:if>
 		</td>
 		<td></td>
 		
+				
 		
 		
 <%-- 		<%if(purchase.getTranCode().trim().equals("2")){ %>
@@ -172,11 +172,12 @@ function fncGetList(currentPage) {
 		<%} %></td> --%>
 		
 		<tr>
-		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
+		<td colspan="20" bgcolor="D6D7D6" height="1"></td>
 		</tr>
 	
 		<%-- <%} %>	 --%>
 		</c:forEach>
+		
 		
 	
 </table>

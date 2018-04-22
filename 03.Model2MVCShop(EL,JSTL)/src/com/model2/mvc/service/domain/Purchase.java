@@ -16,6 +16,7 @@ public class Purchase {
 	private String tranCode;
 	private int tranNo;
 	private int isPurchaseCode;
+	private int quantity;
 	
 	public Purchase(){
 	}
@@ -93,6 +94,14 @@ public class Purchase {
 
 	public void setIsPurchaseCode(int isPurchaseCode) {
 		this.isPurchaseCode = isPurchaseCode;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 	@Override

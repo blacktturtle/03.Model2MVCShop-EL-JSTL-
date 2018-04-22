@@ -112,6 +112,8 @@ function fncGetList(currentPage) {
 		<td class="ct_line02"></td>
 		<td class="ct_list_b" width="150">가격</td>
 		<td class="ct_line02"></td>
+		<td class="ct_list_b" width="150">수량</td>
+		<td class="ct_line02"></td>
 		<td class="ct_list_b">등록일</td>	
 		<td class="ct_line02"></td>
 		<td class="ct_list_b">현재상태</td>	
@@ -159,23 +161,26 @@ function fncGetList(currentPage) {
 		<td align="left">${product.price}</td>
 <%-- 		<td align="left"><%=vo.getPrice() %></td> --%>
 		<td></td>
+		<td align="left">${product.quantity}</td>
+<%-- 		<td align="left"><%=vo.getPrice() %></td> --%>
+		<td></td>
 		<td align="left">${product.regDate}</td>
 <%-- 		<td align="left"><%=vo.getRegDate() %></td> --%>
 		<td></td>
 		<td align="left">		
-		 <c:if test="${purchase[i-1].tranCode=='0' }">
+		 <c:if test="${product.quantity!=0 && purchase[i-1].tranCode=='0' }">
 		 	판매중
 		 </c:if>
-		 <c:if test="${purchase[i-1].tranCode=='1' }">
-		 	구매완료 <a href="/updateTranCode.do?menu=manage&prodNo=${product.prodNo}"> 배송하기</a>
+		 <c:if test="${product.quantity!=0 && purchase[i-1].tranCode=='1' }">
+		 	구매 완료 <a href="/delivery.do?menu=manage&tranNo=${purchase[i-1].tranNo}">배송 정보 확인</a>
 		 </c:if>
-		 <c:if test="${purchase[i-1].tranCode=='2' }">
+		 <c:if test="${product.quantity!=0 && purchase[i-1].tranCode=='2' }">
 		 	배송중
 		 </c:if>
-		 <c:if test="${purchase[i-1].tranCode=='3' }">
+		 <c:if test="${product.quantity!=0 && purchase[i-1].tranCode=='3' }">
 		 	배송완료
 		 </c:if>
-		 <c:if test="${purchase[i-1].tranCode=='4' }">
+		 <c:if test="${product.quantity=='0' }">
 		 	재고없음
 		 </c:if>
 		 
