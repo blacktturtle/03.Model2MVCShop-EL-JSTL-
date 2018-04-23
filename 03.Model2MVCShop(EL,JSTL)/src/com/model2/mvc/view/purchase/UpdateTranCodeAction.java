@@ -21,14 +21,12 @@ public class UpdateTranCodeAction extends Action{
 		Purchase purchase =  purchaseService.getPurchase2(prodNo);		
 		System.out.println("UpdateTranCode 받아온 TranCode ::" + purchase.getTranCode());
 		
-		purchase.setTranCode("2");
-		System.out.println("배송정보바꾸고다시 : " + purchase);
-		
+		purchase.setTranCode("2"); // 배송중으로 변경		
 		
 		purchaseService.updateTranCode(purchase);
 		
 		
-		return "forward:/listProduct.do?menu=manage";
+		return "forward:/delivery.do?prodNo="+purchase.getPurchaseProd().getProdNo();
 	}
 
 }

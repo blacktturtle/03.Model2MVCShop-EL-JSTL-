@@ -1,5 +1,7 @@
 package com.model2.mvc.view.purchase;
 
+import java.security.Provider.Service;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,17 +20,16 @@ public class UpdatePurchaseAction extends Action {
 		int tranNo = Integer.parseInt(request.getParameter("tranNo"));
 		System.out.println("Update를 위해 받아온 tranNo :" + tranNo);
 		
-		Purchase purchase = new Purchase();
-		purchase.setTranNo(tranNo);
+		PurchaseService service = new PurchaseServiceImpl();
+		
+		Purchase purchase = service.getPurchase(tranNo);
 		purchase.setPaymentOption(request.getParameter("paymentOption"));
 		purchase.setReceiverName(request.getParameter("receiverName"));
 		purchase.setReceiverPhone(request.getParameter("receiverPhone"));
 		purchase.setDivyAddr(request.getParameter("receiverAddr"));
 		purchase.setDivyRequest(request.getParameter("receiverRequest"));
 		purchase.setDivyDate(request.getParameter("divyDate"));
-		purchase.setTranCode(request.getParameter("trancCode"));
 		
-		PurchaseService service = new PurchaseServiceImpl();
 		service.updatePurcahse(purchase);
 	
 		return "forward:/getPurchase.do?tranNo="+tranNo;

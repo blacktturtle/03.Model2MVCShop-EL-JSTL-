@@ -30,9 +30,8 @@ public class UpdateTranCodeByProdAction extends Action {
 				purchase.setTranCode("3");
 				purchaseService.updateTranCode(purchase);
 			}
-			if (purchase.getTranCode().equals("1")) { //魄概秒家 老 版快
-				purchase.setIsPurchaseCode(0);
-				purchase.setTranCode("0");
+			if (purchase.getTranCode().equals("1")) { //备概秒家 老 版快
+				purchase.setIsPurchaseCode(0); // 0 : 备概秒家
 				purchaseService.updateTranCode(purchase);
 				
 				Product product = productService.getProduct2(tranNo);

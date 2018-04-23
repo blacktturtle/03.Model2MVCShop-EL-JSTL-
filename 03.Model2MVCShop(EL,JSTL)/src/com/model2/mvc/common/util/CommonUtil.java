@@ -51,6 +51,16 @@ public class CommonUtil {
 			return dateStr.substring(0, 4) + "/" + dateStr.substring(4, 6)
 					+ "/" + dateStr.substring(6, 8);
 	}
+	
+	public static String toDateStr2(String dateStr) { // 날짜 리턴
+		if (dateStr == null)
+			return "";
+//		else if (dateStr.length() != 8)
+//			return dateStr;
+		else
+			return dateStr.substring(2, 4) + "/" + dateStr.substring(5, 7)
+					+ "/" + dateStr.substring(8, 10);
+	}
 
 	public static String toDateStr(Timestamp date) { // 시간까지 리턴
 		if (date == null)

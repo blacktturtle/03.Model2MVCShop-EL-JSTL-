@@ -38,7 +38,7 @@ function fncGetList(currentPage) {
 
 <body bgcolor="#ffffff" text="#000000">
 
-<div style="width:98%; margin-left:10px;">
+<div style="width:98%; margin-center:10px;">
 
 
 <form name="detailForm" action="/listProduct.do?menu=manage"method="post">
@@ -47,7 +47,7 @@ function fncGetList(currentPage) {
 		<td width="15" height="37">
 			<img src="/images/ct_ttl_img01.gif" width="15" height="37"/>
 		</td>
-		<td background="/images/ct_ttl_img02.gif" width="100%" style="padding-left:10px;">
+		<td background="/images/ct_ttl_img02.gif" width="100%" style="padding-center:10px;">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td width="93%" class="ct_ttl01">상품 관리</td>
@@ -117,9 +117,11 @@ function fncGetList(currentPage) {
 		<td class="ct_list_b">등록일</td>	
 		<td class="ct_line02"></td>
 		<td class="ct_list_b">현재상태</td>	
+		<td class="ct_line02"></td>
+		<td class="ct_list_b">배송정보</td>	
 	</tr>
 	<tr>
-		<td colspan="11" bgcolor="808285" height="1"></td>
+		<td colspan="20" bgcolor="808285" height="1"></td>
 	</tr>
 	<%-- 
 	<% 	
@@ -139,7 +141,7 @@ function fncGetList(currentPage) {
 	<tr class="ct_list_pop">
 		<td align="center">${i}</td>
 		<td></td>
-				<td align="left">
+				<td align="center">
 				<c:if test="${purchase[i-1].tranCode=='0'}">
 					<a href="/updateProductView.do?prodNo=${product.prodNo}&menu=manage">${product.prodName}</a>
 				</c:if>
@@ -158,32 +160,31 @@ function fncGetList(currentPage) {
 				</td>
 		
 		<td></td>
-		<td align="left">${product.price}</td>
-<%-- 		<td align="left"><%=vo.getPrice() %></td> --%>
+		<td align="center">${product.price}</td>
+<%-- 		<td align="center"><%=vo.getPrice() %></td> --%>
 		<td></td>
-		<td align="left">${product.quantity}</td>
-<%-- 		<td align="left"><%=vo.getPrice() %></td> --%>
+		<td align="center">${product.quantity}</td>
+<%-- 		<td align="center"><%=vo.getPrice() %></td> --%>
 		<td></td>
-		<td align="left">${product.regDate}</td>
-<%-- 		<td align="left"><%=vo.getRegDate() %></td> --%>
+		<td align="center">${product.regDate}</td>
+<%-- 		<td align="center"><%=vo.getRegDate() %></td> --%>
 		<td></td>
-		<td align="left">		
-		 <c:if test="${product.quantity!=0 && purchase[i-1].tranCode=='0' }">
-		 	판매중
-		 </c:if>
-		 <c:if test="${product.quantity!=0 && purchase[i-1].tranCode=='1' }">
-		 	구매 완료 <a href="/delivery.do?menu=manage&tranNo=${purchase[i-1].tranNo}">배송 정보 확인</a>
-		 </c:if>
-		 <c:if test="${product.quantity!=0 && purchase[i-1].tranCode=='2' }">
-		 	배송중
-		 </c:if>
-		 <c:if test="${product.quantity!=0 && purchase[i-1].tranCode=='3' }">
-		 	배송완료
+		<td align="center">
+		
+		
+	
+		 <c:if test="${product.quantity!='0'}">
+		 	판매중 
 		 </c:if>
 		 <c:if test="${product.quantity=='0' }">
 		 	재고없음
 		 </c:if>
-		 
+		 </td>	
+		 <td></td>
+		<td align="center">
+		<a href="/delivery.do?prodNo=${product.prodNo}">배송 정보 확인</a>
+		</td>
+	
 			
 <%-- 		    <%if((purchase.getTranCode().equals("0"))){ %>		    
 		    판매중		    
@@ -198,10 +199,10 @@ function fncGetList(currentPage) {
 			<%} %>
 		 --%>
 		
-		</td>	
+		
 	</tr>
 	<tr>
-		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
+		<td colspan="20" bgcolor="D6D7D6" height="1"></td>
 	</tr>	
 <%-- <%} %> --%>
 

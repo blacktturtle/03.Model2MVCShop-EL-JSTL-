@@ -104,6 +104,12 @@ function history(){
 			</tr>
 			<tr>
 				<td class="Depth03">
+					<a href="javascript:history()">장바구니</a>
+				</td>
+				
+			</tr>
+			<tr>
+				<td class="Depth03">
 					<a href="../home.jsp"  target="rightFrame">HOME</a>
 				</td>
 				

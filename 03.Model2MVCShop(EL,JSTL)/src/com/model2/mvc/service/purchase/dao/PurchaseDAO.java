@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import com.model2.mvc.common.Search;
+import com.model2.mvc.common.util.CommonUtil;
 import com.model2.mvc.common.util.DBUtil;
 import com.model2.mvc.service.domain.Product;
 import com.model2.mvc.service.domain.Purchase;
@@ -207,7 +208,8 @@ public class PurchaseDAO {
 		stmt.setString(3, purchase.getReceiverPhone());
 		stmt.setString(4, purchase.getDivyAddr());
 		stmt.setString(5, purchase.getDivyRequest());
-		stmt.setString(6, purchase.getDivyDate());		
+		System.out.println("업데이트에서 희망날짜 : " + CommonUtil.toDateStr2(purchase.getDivyDate()));
+		stmt.setString(6, CommonUtil.toDateStr2(purchase.getDivyDate()));
 		stmt.setString(7, purchase.getTranCode());
 		stmt.setInt(8, purchase.getIsPurchaseCode());
 		stmt.setInt(9, purchase.getTranNo());
@@ -215,6 +217,62 @@ public class PurchaseDAO {
 
 		con.close();
 	}
+	
+public Map<String, Object> getDeliveryList(Search search, int prodNo) throws Exception {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		Connection con = DBUtil.getConnection();
+		
+		String sql = "SELECT * FROM TRANSACTION WHERE PROD_NO =" + prodNo;
+		
+		System.out.println("ProductDAO::Original SQL :: " + sql);
+
+		// ==> TotalCount GET
+		int totalCount = this.getTotalCount(sql);
+		System.out.println("UserDAO :: totalCount  :: " + totalCount);
+		
+		sql = makeCurrentPageSql(sql, search);
+		PreparedStatement pStmt = con.prepareStatement(sql);
+		ResultSet rs = pStmt.executeQuery();
+		
+		System.out.println(search);
+
+		ArrayList<Purchase> list = new ArrayList<Purchase>();
+		
+		while(rs.next()) {
+				Purchase purchase = new Purchase();
+				purchase.setTranNo(rs.getInt("TRAN_NO"));
+				purchase.setPurchaseProd(productDAO.findProduct(rs.getInt("PROD_NO")));
+				purchase.setBuyer(userDAO.findUser(rs.getString("BUYER_ID")));
+				purchase.setPaymentOption(rs.getString("PAYMENT_OPTION"));
+				purchase.setReceiverName(rs.getString("RECEIVER_NAME"));
+				purchase.setReceiverPhone(rs.getString("RECEIVER_PHONE"));
+				purchase.setDivyAddr(rs.getString("DEMAILADDR"));
+				purchase.setDivyRequest(rs.getString("DLVY_REQUEST"));
+				purchase.setTranCode(rs.getString("TRAN_STATUS_CODE"));
+				purchase.setOrderDate(rs.getDate("ORDER_DATA"));
+				purchase.setDivyDate(rs.getString("DLVY_DATE"));
+				purchase.setIsPurchaseCode(rs.getInt("IS_PURCHASE_CODE"));
+				purchase.setQuantity(rs.getInt("QUANTITY"));
+				
+
+				list.add(purchase); // 리스트에 추가
+		}
+		System.out.println("list.size() : " + list.size());
+		map.put("totalCount", new Integer(totalCount)); // (게시글 총 갯수를 count로)
+		map.put("list", list); // list put
+		System.out.println("map().size() : " + map.size()); // count 와 list 두개 들어감
+
+		con.close();
+
+		return map; // count와 list가 담긴 map 리턴
+	}
+	
+	
+	
+	
+	
 	
 	private int getTotalCount(String sql) throws Exception {
 

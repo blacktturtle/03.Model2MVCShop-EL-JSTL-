@@ -105,7 +105,12 @@ function fncGetList(currentPage) {
 	<tr class="ct_list_pop">
 	<td align="center">
 <%-- 			<a href="/getPurchase.do?tranNo=<%=vo.getTranNo() %>"><%=i+1 %></a> --%>
+		<c:if test="${list.tranCode=='1' }">
 			<a href="/getPurchase.do?tranNo=${list.tranNo}">${i}</a>
+		</c:if>
+		<c:if test="${list.tranCode!='1' }">
+			${i}
+		</c:if>
 		</td>
 		<td></td>
 		<td align="left">
@@ -135,7 +140,8 @@ function fncGetList(currentPage) {
 <%-- 		<td align="left"><%=product.getPrice() %></td> --%>
 		<td></td>
 				
-		<td align="left"> 	
+		<td align="left">
+		<c:if test="${list.isPurchaseCode=='1' }"> 	
 		<c:if test="${list.tranCode=='1' }">
 		현재 구매완료 상태입니다.
 		</c:if>
@@ -144,6 +150,7 @@ function fncGetList(currentPage) {
 		</c:if>
 		<c:if test="${list.tranCode=='3' }">
 		현재 배송완료 상태입니다.
+		</c:if>		
 		</c:if>		
 
 		</td>
