@@ -55,23 +55,14 @@ public class ListProductAction extends Action {
 		Page resultPage = new Page(currentPage, ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
 		System.out.println("ListUserAction ::" + resultPage);
 
-		//Trancode 넘기게할라고
-		PurchaseService purchaseService = new PurchaseServiceImpl();
+		
 		ArrayList<Product> list = (ArrayList<Product>) map.get("list");
-		ArrayList<Purchase> list2 = new ArrayList<Purchase>();
 		
 		System.out.println("리스트 사이즈 : " + list.size());
 		for (int i = 0; i < list.size(); i++) {
 			System.out.println("리스트 출력  : " + list.get(i));
-			Purchase purchase = purchaseService.getPurchase2(list.get(i).getProdNo());
-			System.out.println("트랜코드 넘기기전 확인 : " + purchase.getTranCode());
 			
-			list2.add(purchase);
 		}
-		
-
-
-		request.setAttribute("purchase", list2);
 		request.setAttribute("list", map.get("list"));
 		request.setAttribute("resultPage", resultPage);
 		request.setAttribute("search", search);

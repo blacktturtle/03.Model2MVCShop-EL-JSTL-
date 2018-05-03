@@ -179,7 +179,7 @@ function fncGetList(currentPage) {
 		<td align="center">${i}</td>
 		<td></td>
 				<td align="center">
-				<c:if test="${product.quantity!='0'}">
+				<c:if test="${product.quantity !='0'}">
 					<a href="/getProduct.do?prodNo=${product.prodNo}&menu=search">${product.prodName}</a>
 				</c:if>
 			

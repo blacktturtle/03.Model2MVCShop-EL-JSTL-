@@ -142,11 +142,11 @@ function fncGetList(currentPage) {
 		<td align="center">${i}</td>
 		<td></td>
 				<td align="center">
-				<c:if test="${purchase[i-1].tranCode=='0'}">
+				<c:if test="${product.quantity=='0'}">
 					<a href="/updateProductView.do?prodNo=${product.prodNo}&menu=manage">${product.prodName}</a>
 				</c:if>
 				
-				<c:if test="${!(purchase[i-1].tranCode=='0')}">
+				<c:if test="${!(product.quantity=='0')}">
 					<a href="/getProduct.do?prodNo=${product.prodNo}&menu=completeSearch">${product.prodName}</a>
 				</c:if>
 				

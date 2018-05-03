@@ -114,7 +114,8 @@ public class ProductDAO {
 
 		Connection con = DBUtil.getConnection();
 
-		String sql = "SELECT * FROM PRODUCT ";
+		String sql = "SELECT * "
+				+ " FROM PRODUCT ";
 		
 
 		if (search.getSearchCondition() != null) {
@@ -129,11 +130,11 @@ public class ProductDAO {
 			}
 		}
 		if(search.getPriceUpDown()==0) { // 처음들어왔을때
-			sql += "ORDER BY prod_no";	
+			sql += " ORDER BY PROD_NO";	
 		}else if(search.getPriceUpDown()==1) { //높은가격순
-			sql += "ORDER BY PRICE DESC";
+			sql += " ORDER BY PRICE DESC";
 		}else if(search.getPriceUpDown()==2) { // 낮은가격순
-			sql += "ORDER BY PRICE ASC";
+			sql += " ORDER BY PRICE ASC";
 		}
 		
 

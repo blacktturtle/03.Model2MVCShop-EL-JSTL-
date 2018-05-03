@@ -57,10 +57,10 @@ public class PurchaseServiceImpl implements PurchaseService {
 //		purchaseDAO.deletePurchase(tranNo);
 //		
 //	}
-	@Override
+/*	@Override
 	public Purchase getPurchase2(int prodNo) throws Exception {
 		return purchaseDAO.findPurchase2(prodNo);
-	}
+	}*/
 
 	@Override
 	public Map<String, Object> getDeliveryList(Search search, int prodNo) throws Exception {

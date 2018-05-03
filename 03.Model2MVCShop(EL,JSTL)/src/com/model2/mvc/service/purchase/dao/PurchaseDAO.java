@@ -102,8 +102,8 @@ public class PurchaseDAO {
 		return purchase;
 	}
 	
-	public Purchase findPurchase2(int prodNo) throws Exception {
-		// 구매번호를 받음
+/*	public Purchase findPurchase2(int prodNo) throws Exception {
+		// 상품번호를 받음
 		
 		Connection con = DBUtil.getConnection();
 	
@@ -139,7 +139,7 @@ public class PurchaseDAO {
 		con.close();
 
 		return purchase;
-	}
+	}*/
 
 	
 	
@@ -200,7 +200,7 @@ public class PurchaseDAO {
 		Connection con = DBUtil.getConnection();
 
 		String sql = "UPDATE TRANSACTION SET PAYMENT_OPTION=?, RECEIVER_NAME= ?, RECEIVER_PHONE =?, "
-				+ "DEMAILADDR=?,DLVY_REQUEST=? ,DLVY_DATE=? ,TRAN_STATUS_CODE=?,IS_PURCHASE_CODE=? where TRAN_NO=?";
+				+ "DEMAILADDR=?,DLVY_REQUEST=? ,DLVY_DATE=? ,TRAN_STATUS_CODE=?,IS_PURCHASE_CODE=? WHERE TRAN_NO=?";
 
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.setString(1, purchase.getPaymentOption());

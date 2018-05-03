@@ -173,7 +173,7 @@ function fncGetList(currentPage) {
 		</c:if>
 		<c:if test="${list.isPurchaseCode=='1' }">
 		<c:if test="${list.tranCode=='1' }">
-		 <a href="/updateTranCode.do?&prodNo=${list.purchaseProd.prodNo}">배송하기</a>
+		 <a href="/updateTranCode.do?&tranNo=${list.tranNo}">배송하기</a>
 		</c:if>
 		<c:if test="${list.tranCode=='2' }">
 		 배송 시작하였습니다.

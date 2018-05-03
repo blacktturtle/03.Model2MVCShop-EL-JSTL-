@@ -104,7 +104,7 @@ function history(){
 			</tr>
 			<tr>
 				<td class="Depth03">
-					<a href="javascript:history()">장바구니</a>
+					<a href="/wishList.do" target ="rightFrame">Wish List</a>
 				</td>
 				
 			</tr>
